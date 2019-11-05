@@ -1,26 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Form from './components/Form'
+
+class App extends React.Component {
+
+  state = {
+    data: ''
+  }
+
+  componentDidMount() {
+    this.callApi()
+  }
+
+  callApi = async () => {
+    const callapi = await fetch(`https://secure-hamlet-19722.herokuapp.com/api/v1/characters`)
+    const res = await callapi.json()
+    this.setState({ data: res })
+    console.log(this.state.data)
+  }
+
+  render() {
+    return (
+      <div>
+        <Form data={this.state.data} />
+      </div>
+    );
+  }
 }
 
 export default App;
